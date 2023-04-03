@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    compileSdkVersion COMPILE_SDK
+    buildToolsVersion BUILD_TOOLS
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "USE_STETHO", "false"
+        }
+
+        debug {
+            buildConfigField "boolean", "USE_STETHO", "true"
+        }
+    }
+
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+
+    /* EventBut */
+    api "com.github.Rasalexman:KDispatcher:${project.ext.kdispatcherVersion}"
+
+    /* Debug */
+    api "com.facebook.stetho:stetho:${project.ext.stethoVersion}"
+
+    /* Image & Animation */
+    api("io.coil-kt:coil:${project.ext.coilVersion}")
+
+    api "cn.dailystudio:devbricksx:${project.ext.devbricksxVersion}"
+
+    kapt "cn.dailystudio:devbricksx-java-compiler:${project.ext.devbricksxVersion}"
+    kapt "cn.dailystudio:devbricksx-kotlin-compiler:${project.ext.devbricksxVersion}"
+    kapt "androidx.room:room-compiler:${project.ext.roomVersion}"
+
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

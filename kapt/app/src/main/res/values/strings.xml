@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name_release">CodeGen Kapt</string>
+    <string name="app_name_debug">CodeGen Kapt (Debug)</string>
+</resources>
